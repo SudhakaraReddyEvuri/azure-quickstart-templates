@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2016-09-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "vmName": {
@@ -70,7 +70,7 @@
     "publicIPAddressName": "[toLower(concat('publicIP',parameters('vmName')))]",
     "publicIPAddressType": "Dynamic",
     "nicName": "[toLower(concat('nic',parameters('vmName')))]",
-    "vmIdentityResourceId" : "[concat(resourceId('Microsoft.Compute/virtualMachines', variables('vmName')),'/providers/Microsoft.ManagedIdentity/Identities/default')]"
+    "vmIdentityResourceId" : "[concat(resourceId('Microsoft.Compute/virtualMachines', parameters('vmName')),'/providers/Microsoft.ManagedIdentity/Identities/default')]"
   },
 
   "resources": [
@@ -179,11 +179,11 @@
     },	
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/ManagedIdentityExtensionForWindows')]",
+      "name": "[concat(parameters('vmName'),'/ManagedIdentityExtensionForWindows')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
       ],
       "properties": {
         "publisher": "Microsoft.ManagedIdentity",
