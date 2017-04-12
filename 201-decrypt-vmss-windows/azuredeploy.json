@@ -1,0 +1,63 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmssName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of VMSS to be decrypted"
+      },
+      "maxLength": 61
+    },	
+    "volumeType": {
+      "type": "string",
+      "defaultValue": "All",
+      "metadata": {
+        "description": "Type of the volume OS or Data to perform encryption operation"
+      }
+    },
+    "sequenceVersion": {
+      "type": "string",
+      "defaultValue": "1.0",
+      "metadata": {
+        "description": "Pass in an unique value like a GUID everytime the operation needs to be force run"
+      }
+    }	
+  },
+  "variables": {
+    "computeApiVersion": "2017-03-30",
+    "extensionName": "ADETest",
+    "extensionVersion": "2.0",
+    "encryptionOperation": "DisableEncryption",
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "name": "[parameters('vmssName')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "[variables('computeApiVersion')]",
+      "properties": {
+        "virtualMachineProfile": {
+          "extensionProfile": {
+            "extensions": [
+              {
+                "name": "ADETest",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Security",
+				  "type": "ADETest",
+                  "typeHandlerVersion": "[variables('extensionVersion')]",
+                  "autoUpgradeMinorVersion": true,
+                  "forceUpdateTag": "[parameters('sequenceVersion')]",
+                  "settings": {
+                    "VolumeType": "[parameters('volumeType')]",
+                    "EncryptionOperation": "[variables('encryptionOperation')]"
+                  }
+                }
+              }
+            ]
+          }		  
+        }
+      }
+    }
+  ]
+}
