@@ -33,6 +33,17 @@
         "description": "Resource group of the KeyVault"
       }
     },
+    "useExistingKek": {
+      "type": "string",
+      "defaultValue": "nokek",
+      "allowedValues": [
+        "nokek",
+        "kek"
+      ],
+      "metadata": {
+        "description": "Select kek if the secret should be encrypted with a key encryption key and pass explicit keyEncryptionKeyURL. For nokek, you can keep keyEncryptionKeyURL empty."
+      }
+    },
     "keyEncryptionKeyURL": {
       "type": "string",
       "defaultValue": "",
@@ -57,49 +68,44 @@
 	
   },
   "variables": {
-    "computeApiVersion": "2016-04-30-preview", 
-    "extensionName": "ADETest",
-    "extensionVersion": "2.0",
-    "encryptionOperation": "EnableEncryption",
-    "keyEncryptionAlgorithm": "RSA-OAEP",
-    "keyVaultURL": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/')]",
-    "keyVaultResourceID": "[concat(subscription().id,'/resourceGroups/',parameters('keyVaultResourceGroup'),'/providers/Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
+    "encryptVmssUrl": "[concat('https://raw.githubusercontent.com/SudhakaraReddyEvuri/azure-quickstart-templates/suredd-vmss/201-encrypt-running-vmss-windows/encryptvmss-',parameters('useExistingKek'),'.json')]"
   },
   "resources": [
     {
-      "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "name": "[parameters('vmssName')]",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "[variables('computeApiVersion')]",
+      "name": "encryptvmss",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
       "properties": {
-        "virtualMachineProfile": {
-          "extensionProfile": {
-            "extensions": [
-              {
-                "name": "ADETest",
-                "properties": {
-                  "publisher": "Microsoft.Azure.Security",
-				  "type": "ADETest",
-                  "typeHandlerVersion": "[variables('extensionVersion')]",
-                  "autoUpgradeMinorVersion": true,
-                  "forceUpdateTag": "[parameters('sequenceVersion')]",
-                  "settings": {
-                    "AADClientID": "[parameters('aadClientID')]",
-                    "KeyVaultURL": "[variables('keyVaultURL')]",
-                    "KeyEncryptionKeyURL": "[parameters('keyEncryptionKeyURL')]",
-                    "KeyVaultResourceId": "[variables('keyVaultResourceID')]",
-                    "KekVaultResourceId": "[variables('keyVaultResourceID')]",					
-                    "KeyEncryptionAlgorithm": "[variables('keyEncryptionAlgorithm')]",
-                    "VolumeType": "[parameters('volumeType')]",
-                    "EncryptionOperation": "[variables('encryptionOperation')]"
-                  },
-                  "protectedSettings": {
-                    "AADClientSecret": "[parameters('aadClientSecret')]"
-                  }                  
-                }
-              }
-            ]
-          }		  
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('encryptVmssUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmssName": {
+            "value": "[parameters('vmssName')]"
+          },
+          "aadClientID": {
+            "value": "[parameters('aadClientID')]"
+          },
+          "aadClientSecret": {
+            "value": "[parameters('aadClientSecret')]"
+          },
+          "keyVaultName": {
+            "value": "[parameters('keyVaultName')]"
+          },	
+          "keyVaultResourceGroup": {
+            "value": "[parameters('keyVaultResourceGroup')]"
+          },	
+          "keyEncryptionKeyURL": {
+            "value": "[parameters('keyEncryptionKeyURL')]"
+          },	
+          "volumeType": {
+            "value": "[parameters('volumeType')]"
+          },	
+          "sequenceVersion": {
+            "value": "[parameters('sequenceVersion')]"
+          }
         }
       }
     }

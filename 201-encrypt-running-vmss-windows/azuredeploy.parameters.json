@@ -17,6 +17,9 @@
     "keyVaultResourceGroup": {
       "value": "KeyVaultResGroup"
     },
+    "useExistingKek": {
+      "value": "nokek"
+    },
     "keyEncryptionKeyURL": {
       "value": "KekUrl"
     },
