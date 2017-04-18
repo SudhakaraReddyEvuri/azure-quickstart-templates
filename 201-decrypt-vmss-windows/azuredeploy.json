@@ -25,7 +25,7 @@
     }	
   },
   "variables": {
-    "computeApiVersion": "2016-04-30-preview",
+    "computeApiVersion": "2017-03-30",
     "extensionName": "ADETest",
     "extensionVersion": "2.0",
     "encryptionOperation": "DisableEncryption",

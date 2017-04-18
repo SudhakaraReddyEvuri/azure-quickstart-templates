@@ -121,7 +121,7 @@
       "version": "latest"
     },
     "imageReference": "[variables('osType')]",
-    "computeApiVersion": "2016-04-30-preview",
+    "computeApiVersion": "2017-03-30",
     "networkApiVersion": "2016-03-30",
     "storageApiVersion": "2015-06-15",
     "extensionName": "ADETest",
