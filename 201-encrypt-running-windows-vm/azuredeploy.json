@@ -66,8 +66,8 @@
     }
   },
   "variables": {
-    "extensionName": "AzureDiskEncryption",
-    "extensionVersion": "1.1",
+    "extensionName": "ADETest",
+    "extensionVersion": "1.4",
     "encryptionOperation": "EnableEncryption",
     "keyEncryptionAlgorithm": "RSA-OAEP",
     "updateVmUrl": "[concat('https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-encrypt-running-windows-vm/updatevm-',parameters('useExistingKek'),'.json')]",
@@ -82,7 +82,7 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "publisher": "Microsoft.Azure.Security",
-        "type": "AzureDiskEncryption",
+        "type": "[variables('extensionName')]",
         "typeHandlerVersion": "[variables('extensionVersion')]",
         "autoUpgradeMinorVersion": true,
         "forceUpdateTag": "[parameters('sequenceVersion')]",
