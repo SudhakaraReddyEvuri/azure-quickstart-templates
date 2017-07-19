@@ -41,10 +41,10 @@
           "extensionProfile": {
             "extensions": [
               {
-                "name": "[parameters('extensionName')]",
+                "name": "[variables('extensionName')]",
                 "properties": {
                   "publisher": "Microsoft.Azure.Security",
-				  "type": "[parameters('extensionName')]",
+				  "type": "[variables('extensionName')]",
                   "typeHandlerVersion": "[variables('extensionVersion')]",
                   "autoUpgradeMinorVersion": true,
                   "forceUpdateTag": "[parameters('sequenceVersion')]",
