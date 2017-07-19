@@ -26,7 +26,7 @@
   },
   "variables": {
     "computeApiVersion": "2017-03-30",
-    "extensionName": "ADETest",
+    "extensionName": "AzureDiskEncryption",
     "extensionVersion": "2.0",
     "encryptionOperation": "DisableEncryption",
   },
@@ -41,10 +41,10 @@
           "extensionProfile": {
             "extensions": [
               {
-                "name": "ADETest",
+                "name": "[parameters('extensionName')]",
                 "properties": {
                   "publisher": "Microsoft.Azure.Security",
-				  "type": "ADETest",
+				  "type": "[parameters('extensionName')]",
                   "typeHandlerVersion": "[variables('extensionVersion')]",
                   "autoUpgradeMinorVersion": true,
                   "forceUpdateTag": "[parameters('sequenceVersion')]",

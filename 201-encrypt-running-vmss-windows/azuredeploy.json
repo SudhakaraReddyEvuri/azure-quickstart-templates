@@ -60,6 +60,7 @@
     },
     "sequenceVersion": {
       "type": "string",
+      "type": "string",
       "defaultValue": "1.0",
       "metadata": {
         "description": "Pass in an unique value like a GUID everytime the operation needs to be force run"
@@ -68,7 +69,7 @@
 	
   },
   "variables": {
-    "encryptVmssUrl": "[concat('https://raw.githubusercontent.com/SudhakaraReddyEvuri/azure-quickstart-templates/suredd-vmss/201-encrypt-running-vmss-windows/encryptvmss-',parameters('useExistingKek'),'.json')]"
+    "encryptVmssUrl": "[concat('https://raw.githubusercontent.com/SudhakaraReddyEvuri/azure-quickstart-templates/suredd-vmss-prod/201-encrypt-running-vmss-windows/encryptvmss-',parameters('useExistingKek'),'.json')]"
   },
   "resources": [
     {

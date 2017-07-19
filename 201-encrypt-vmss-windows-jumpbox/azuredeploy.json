@@ -106,7 +106,7 @@
 	
   },
   "variables": {
-    "encryptVmssUrl": "[concat('https://raw.githubusercontent.com/SudhakaraReddyEvuri/azure-quickstart-templates/suredd-vmss/201-encrypt-vmss-windows-jumpbox/encryptvmss-',parameters('useExistingKek'),'.json')]"
+    "encryptVmssUrl": "[concat('https://raw.githubusercontent.com/SudhakaraReddyEvuri/azure-quickstart-templates/suredd-vmss-prod/201-encrypt-vmss-windows-jumpbox/encryptvmss-',parameters('useExistingKek'),'.json')]"
   },
   "resources": [
     {
