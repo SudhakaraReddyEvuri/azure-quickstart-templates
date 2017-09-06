@@ -9,16 +9,32 @@
         "description": "Size of VMs in the VM Scale Set."
       }
     },
-    "windowsOSVersion": {
+    "imagePublisher": {
+      "type": "string",
+      "defaultValue": "MicrosoftWindowsServer",
+      "metadata": {
+        "description": "Publisher of OS image"
+      }
+    },
+    "imageOffer": {
+      "type": "string",
+      "defaultValue": "WindowsServer",
+      "metadata": {
+        "description": "OS image offer"
+      }
+    },
+    "imageSku": {
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
-      "allowedValues": [
-        "2008-R2-SP1",
-        "2012-Datacenter",
-        "2012-R2-Datacenter"
-      ],
       "metadata": {
-        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version. Allowed values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
+        "description": "OS image SKU"
+      }
+    },	
+    "osVersion": {
+      "type": "string",
+      "defaultValue": "2012-R2-Datacenter",
+      "metadata": {
+        "description": "OS Version. This will pick a fully patched image of this given OS version. Example values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
       }
     },
     "vmssName": {
@@ -123,9 +139,18 @@
           "vmSku": {
             "value": "[parameters('vmSku')]"
           },
-          "windowsOSVersion": {
-            "value": "[parameters('windowsOSVersion')]"
+          "imagePublisher": {
+            "value": "[parameters('imagePublisher')]"
           },
+          "imageOffer": {
+            "value": "[parameters('imageOffer')]"
+          },
+          "imageSku": {
+            "value": "[parameters('imageSku')]"
+          },
+          "osVersion": {
+            "value": "[parameters('osVersion')]"
+          },		  
           "vmssName": {
             "value": "[parameters('vmssName')]"
           },

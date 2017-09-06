@@ -9,17 +9,32 @@
         "description": "Size of VMs in the VM Scale Set."
       }
     },
-    "windowsOSVersion": {
+    "imagePublisher": {
+      "type": "string",
+      "defaultValue": "MicrosoftWindowsServer",
+      "metadata": {
+        "description": "Publisher of OS image"
+      }
+    },
+    "imageOffer": {
+      "type": "string",
+      "defaultValue": "WindowsServer",
+      "metadata": {
+        "description": "OS image offer"
+      }
+    },
+    "imageSku": {
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
-      "allowedValues": [
-        "2008-R2-SP1",
-        "2012-Datacenter",
-        "2012-R2-Datacenter",
-		"2016-Datacenter"
-      ],
       "metadata": {
-        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version. Allowed values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
+        "description": "OS image SKU"
+      }
+    },	
+    "osVersion": {
+      "type": "string",
+      "defaultValue": "2012-R2-Datacenter",
+      "metadata": {
+        "description": "OS Version. This will pick a fully patched image of this given OS version. Example values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
       }
     },
     "vmssName": {
@@ -116,10 +131,10 @@
     "nicName": "[concat(variables('namingInfix'), 'nic')]",
     "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
     "osType": {
-      "publisher": "MicrosoftWindowsServer",
-      "offer": "WindowsServer",
-      "sku": "[parameters('windowsOSVersion')]",
-      "version": "latest"
+      "publisher": "[parameters('imagePublisher')]",
+      "offer": "[parameters('imageOffer')]",
+      "sku": "[parameters('imageSku')]",
+      "version": "[parameters('osVersion')]"
     },
     "imageReference": "[variables('osType')]",
     "computeApiVersion": "2017-03-30",
