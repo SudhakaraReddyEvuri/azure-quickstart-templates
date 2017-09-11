@@ -5,9 +5,21 @@
     "vmSku": {
       "value": "Standard_A1"
     },
+    "imagePublisher": {
+      "value": "MicrosoftWindowsServer"
+    },
+    "imageOffer": {
+      "value": "WindowsServer"
+    },
+    "imageSku": {
+      "value": "2012-R2-Datacenter"
+    },
+    "osVersion": {
+      "value": "latest"
+    },	
     "vmssName": {
       "value": "your-vmss"
-    },
+    },	
     "instanceCount": {
       "value": 2
     },

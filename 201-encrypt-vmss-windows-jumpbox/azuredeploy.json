@@ -32,7 +32,7 @@
     },	
     "osVersion": {
       "type": "string",
-      "defaultValue": "2012-R2-Datacenter",
+      "defaultValue": "latest",
       "metadata": {
         "description": "OS Version. This will pick a fully patched image of this given OS version. Example values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
       }
