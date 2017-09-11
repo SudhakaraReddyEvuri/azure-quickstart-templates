@@ -8,7 +8,7 @@
     "volumeType": {
       "value": "All"
     },
-    "sequenceVersion": {
+    "forceUpdateTag": {
       "value": "1.0"
     }	
   }
