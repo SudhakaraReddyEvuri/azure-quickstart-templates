@@ -135,7 +135,7 @@
     "computeApiVersion": "2017-03-30",
     "networkApiVersion": "2016-03-30",
     "storageApiVersion": "2015-06-15",
-    "extensionName": "ADETest",
+    "extensionName": "AzureDiskEncryption",
     "extensionVersion": "2.1",
     "encryptionOperation": "EnableEncryption",
     "keyVaultURL": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/')]",

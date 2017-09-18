@@ -26,7 +26,7 @@
   },
   "variables": {
     "computeApiVersion": "2017-03-30",
-    "extensionName": "ADETest",
+    "extensionName": "AzureDiskEncryption",
     "extensionVersion": "2.1",
     "encryptionOperation": "DisableEncryption",
   },
