@@ -9,18 +9,6 @@
       },
       "maxLength": 61
     },
-    "aadClientID": {
-      "type": "string",
-      "metadata": {
-        "description": "Client ID of AAD app which has permissions to KeyVault"
-      }
-    },
-    "aadClientSecret": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Client Secret of AAD app which has permissions to KeyVault"
-      }
-    },
     "keyVaultName": {
       "type": "string",
       "metadata": {
@@ -33,24 +21,20 @@
         "description": "Resource group of the KeyVault"
       }
     },
-    "useExistingKek": {
-      "type": "string",
-      "defaultValue": "nokek",
-      "allowedValues": [
-        "nokek",
-        "kek"
-      ],
-      "metadata": {
-        "description": "Select kek if the secret should be encrypted with a key encryption key and pass explicit keyEncryptionKeyURL. For nokek, you can keep keyEncryptionKeyURL empty."
-      }
-    },
     "keyEncryptionKeyURL": {
       "type": "string",
-      "defaultValue": "",
+	  "defaultValue": "",
       "metadata": {
         "description": "URL of the KeyEncryptionKey used to encrypt the volume encryption key"
       }
     },
+    "keyEncryptionAlgorithm": {
+      "type": "string",
+	  "defaultValue": "RSA-OAEP",	  
+      "metadata": {
+        "description": "keyEncryptionAlgorithm used to wrap volume encryption key using KeyEncryptionKeyURL"
+      }
+    },	
     "volumeType": {
       "type": "string",
       "defaultValue": "All",
@@ -58,54 +42,52 @@
         "description": "Type of the volume OS or Data to perform encryption operation"
       }
     },
-    "sequenceVersion": {
-      "type": "string",
+    "forceUpdateTag": {
       "type": "string",
       "defaultValue": "1.0",
       "metadata": {
         "description": "Pass in an unique value like a GUID everytime the operation needs to be force run"
       }
     }
-	
   },
   "variables": {
-    "encryptVmssUrl": "[concat('https://raw.githubusercontent.com/SudhakaraReddyEvuri/azure-quickstart-templates/suredd-vmss/201-encrypt-running-vmss-windows/encryptvmss-',parameters('useExistingKek'),'.json')]"
+    "computeApiVersion": "2017-03-30", 
+    "extensionName": "AzureDiskEncryption",
+    "extensionVersion": "2.1",
+    "encryptionOperation": "EnableEncryption",
+    "keyVaultURL": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/')]",
+    "keyVaultResourceID": "[concat(subscription().id,'/resourceGroups/',parameters('keyVaultResourceGroup'),'/providers/Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
   },
   "resources": [
     {
-      "name": "encryptvmss",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "name": "[parameters('vmssName')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "[variables('computeApiVersion')]",
       "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('encryptVmssUrl')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "vmssName": {
-            "value": "[parameters('vmssName')]"
-          },
-          "aadClientID": {
-            "value": "[parameters('aadClientID')]"
-          },
-          "aadClientSecret": {
-            "value": "[parameters('aadClientSecret')]"
-          },
-          "keyVaultName": {
-            "value": "[parameters('keyVaultName')]"
-          },	
-          "keyVaultResourceGroup": {
-            "value": "[parameters('keyVaultResourceGroup')]"
-          },	
-          "keyEncryptionKeyURL": {
-            "value": "[parameters('keyEncryptionKeyURL')]"
-          },	
-          "volumeType": {
-            "value": "[parameters('volumeType')]"
-          },	
-          "sequenceVersion": {
-            "value": "[parameters('sequenceVersion')]"
+        "virtualMachineProfile": {
+          "extensionProfile": {
+            "extensions": [
+              {
+                "name": "[variables('extensionName')]",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Security",
+                  "type": "[variables('extensionName')]",
+                  "typeHandlerVersion": "[variables('extensionVersion')]",
+                  "autoUpgradeMinorVersion": true,
+                  "forceUpdateTag": "[parameters('forceUpdateTag')]",
+                  "settings": {
+                    "EncryptionOperation": "[variables('encryptionOperation')]",
+				    "KeyVaultURL": "[variables('keyVaultURL')]",
+                    "KeyVaultResourceId": "[variables('keyVaultResourceID')]",
+                    "KeyEncryptionKeyURL": "[parameters('keyEncryptionKeyURL')]",
+                    "KekVaultResourceId": "[variables('keyVaultResourceID')]",					
+                    "KeyEncryptionAlgorithm": "[parameters('keyEncryptionAlgorithm')]",
+                    "VolumeType": "[parameters('volumeType')]"
+                  }                  
+                }
+              }
+            ]
           }
         }
       }

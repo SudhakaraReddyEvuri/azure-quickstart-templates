@@ -29,28 +29,22 @@
     "adminPassword": {
       "value": "password"
     },
-    "aadClientID": {
-      "value": "aadClientId"
-    },
-    "aadClientSecret": {
-      "value": "aadClientSecret"
-    },
     "keyVaultName": {
       "value": "yourVault"
     },
     "keyVaultResourceGroup": {
       "value": "KeyVaultResGroup"
     },
-    "useExistingKek": {
-      "value": "nokek"
-    },
     "keyEncryptionKeyURL": {
       "value": "KekUrl"
     },
+    "keyEncryptionAlgorithm": {
+      "value": "RSA-OAEP"
+    },	
     "volumeType": {
       "value": "All"
     },
-    "sequenceVersion": {
+    "forceUpdateTag": {
       "value": "1.0"
     }
 	
