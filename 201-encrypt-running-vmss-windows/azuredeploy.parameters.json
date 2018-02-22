@@ -22,6 +22,9 @@
     },
     "forceUpdateTag": {
       "value": "1.0"
+    },
+    "resizeOSDisk": {
+      "value": false
     }	
   }
 }
