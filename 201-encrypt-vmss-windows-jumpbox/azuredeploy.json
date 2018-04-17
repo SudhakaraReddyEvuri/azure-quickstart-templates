@@ -102,6 +102,13 @@
       "metadata": {
         "description": "Pass in an unique value like a GUID everytime the operation needs to be force run"
       }
+    },
+    "resizeOSDisk": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Specifies if OS partition needs to be resized to maximum available OS disk size"
+      }
     }
   },
   "variables": {
@@ -136,7 +143,7 @@
     "networkApiVersion": "2016-03-30",
     "storageApiVersion": "2015-06-15",
     "extensionName": "AzureDiskEncryption",
-    "extensionVersion": "2.1",
+    "extensionVersion": "2.2",
     "encryptionOperation": "EnableEncryption",
     "keyVaultURL": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/')]",
     "keyVaultResourceID": "[concat(subscription().id,'/resourceGroups/',parameters('keyVaultResourceGroup'),'/providers/Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
@@ -321,7 +328,8 @@
                     "KeyEncryptionKeyURL": "[parameters('keyEncryptionKeyURL')]",
                     "KekVaultResourceId": "[variables('keyVaultResourceID')]",					
                     "KeyEncryptionAlgorithm": "[parameters('keyEncryptionAlgorithm')]",
-                    "VolumeType": "[parameters('volumeType')]"
+                    "VolumeType": "[parameters('volumeType')]",
+                    "ResizeOSDisk":"[parameters('resizeOSDisk')]"
                   }
                 }
               }
