@@ -32,7 +32,7 @@
   },
   "resources": [
     {
-      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "type": "Microsoft.Compute/virtualMachineScaleSets/extensions",
       "name": "[parameters('vmssName')]",
       "location": "[resourceGroup().location]",
       "apiVersion": "[variables('computeApiVersion')]",
